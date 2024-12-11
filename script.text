@@ -1,0 +1,122 @@
+-- Active: 1733842609457@@127.0.0.1@3306@salle_sport
+
+
+
+CREATE TABLE members (
+    PersonID int(11) AUTO_INCREMENT NOT NULL ,
+    nom varchar(50),
+    prénom varchar(50),
+    email varchar(50),
+    téléphone varchar(50),
+    PRIMARY KEY(PersonID)
+);
+
+
+CREATE TABLE activités (
+    id_activités int(11) AUTO_INCREMENT NOT NULL,
+    nom_activités VARCHAR(50),
+    descreprion TEXT(500),
+    capacity INT,
+    date_début DATE,
+    date_fin DATE,
+    disponibilité TINYINT(1),
+    PRIMARY key(id_activités)
+);
+
+CREATE TABLE reservation (
+    id_reservation int(11) AUTO_INCREMENT NOT NULL, 
+    date_reservation DATE,
+    status ENUM('confirmée', 'annulée'),
+    member_id int(11),
+    activité_id int(11),
+    PRIMARY KEY(id_reservation),
+    Foreign Key (member_id) REFERENCES members(PersonID),
+    Foreign Key (activité_id) REFERENCES activités(id_activités)
+);
+
+
+
+
+DROP Table activités;
+DROP Table members;
+DROP TABLE reservation;
+
+
+
+-- Active: 1733842609457@@127.0.0.1@3306@salle_sport
+INSERT INTO members(nom, prénom, email, téléphone)
+VALUES
+('abdorrahmane', 'ahouari', 'abdorrahmaneahouari@gmail.com', '151514551'),
+('abdorrahmane', 'ahlalay', 'abdorrahmaneahouari@gmail.com', '151514551'),
+('abdorrahmane', 'zahedi', 'abdorrahmaneahouari@gmail.com', '151514551'),
+('abdorrahmane', 'sarout', 'abdorrahmaneahouari@gmail.com', '151514551'),
+('abdorrahmane', 'ayt hassan', 'abdorrahmaneahouari@gmail.com', '151514551');
+
+
+    INSERT INTO activités(nom_activités, descreprion, capacity, date_début, date_fin, disponibilité)
+VALUES
+('Morning Jogging', 'A group jogging session through the city park.', 30, '2024-12-14', '2025-01-15', 1),  
+('Tennis Tournament', 'A competitive tennis event for players of all levels.', 20, '2024-12-15', '2025-01-17', 1),  
+('Basketball Practice', 'A fun basketball practice session for beginners.', 25, '2024-12-16', '2025-01-16', 1),  
+('Soccer Match', 'A friendly soccer match for teams of 11 players each.', 22, '2024-12-18', '2025-01-18', 1),  
+('Marathon Training', 'A preparatory training for marathon runners.', 50, '2024-12-19', '2025-01-19', 1),  
+('Swimming Workshop', 'Improve your swimming techniques with professional coaches.', 15, '2024-12-20', '2025-01-21', 1);
+
+
+
+
+INSERT INTO reservation(date_reservation, status, member_id, activité_id )
+VALUES
+('2024-12-11', 'confirmée', 1, 5),
+('2024-12-12', 'annulée', 2, 3),
+('2024-12-13', 'confirmée', 3, 1),
+('2024-12-14', 'annulée', 4, 4),
+('2024-12-15', 'confirmée', 5, 2);
+
+
+SELECT members.nom, members.prénom, reservation.date_reservation , reservation.status
+FROM reservation
+INNER JOIN members
+ON members.PersonID = reservation.member_id
+ORDER BY members.nom;
+
+
+SELECT members.nom, members.prénom, reservation.date_reservation , reservation.status, activités.nom_activités, activités.descreprion
+FROM reservation
+INNER JOIN members
+INNER JOIN activités
+ON members.PersonID = reservation.member_id and reservation.activité_id = activités.id_activités;
+
+
+
+
+-- Active: 1733842609457@@127.0.0.1@3306@salle_sport
+use salle_sport;
+
+UPDATE members
+SET nom = 'hassan'
+where PersonID = '1';
+
+UPDATE members
+SET nom = 'ahmed'
+where PersonID = '2';
+
+UPDATE members
+SET nom = 'mohamed'
+where PersonID = '3';
+
+UPDATE members
+SET nom = 'ali'
+where PersonID = '4';
+
+UPDATE members
+SET nom = 'youness'
+where PersonID = '5';
+
+
+
+-- Active: 1733842609457@@127.0.0.1@3306@salle_sport
+
+DELETE FROM activités 
+WHERE id_activités = 6;
+
