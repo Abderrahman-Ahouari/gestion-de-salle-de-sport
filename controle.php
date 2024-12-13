@@ -1,5 +1,10 @@
 <?php
-include 'connection.php'
+include 'connection.php';
+
+
+$fetch = "SELECT * FROM members";
+$stmt = mysqli_query($connection,$fetch);
+
 ?>
 
 
@@ -47,15 +52,51 @@ include 'connection.php'
  
  <div class="p-4 sm:ml-64">
     <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 flex flex-col gap-4">
-      <div class="w-12/12 bg-gray-100 h-14 flex flex_row justify-around">
-      <h1 class="self-center font-black">nom</h1>
-      <h1 class="self-center font-black">prenom</h1>
-      <h1 class="self-center font-black">emailabdo@gmail.com</h1>
-      <h1 class="self-center font-black">0664574812</h1>
-      <div class="flex flex-row gap-8">
-         <button class="w-24 h-10 bg-green-700 self-center">modification</button>
-         <button class="w-24 h-10 bg-red-700 self-center">supression</button>
-      </div>
+     
+
+
+    <div class="relative overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Product name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Color
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Category
+                </th>
+                <th scope="col" class="px-6 py-3">
+                téléphone
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            while($row = mysqli_fetch_assoc($stmt)){
+
+        
+            ?>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <?php echo $row['nom'];?>
+                </th>
+                <td class="px-6 py-4">
+                <?php echo $row['prénom'];?>
+                </td>
+                <td class="px-6 py-4">
+                <?php echo $row['email'];?>
+                </td>
+                <td class="px-6 py-4">
+                <?php echo $row['téléphone'];?>
+                </td>
+            </tr>
+           <?php     } ?>
+        </tbody>
+    </table>
+</div>
 
 
       </div>
